@@ -1,10 +1,10 @@
-# Parte 2 · Questão 2 — Tradução com OpenAI
+# Parte 2 - Questão 2 - Tradução com OpenAI
 
-API FastAPI que traduz do inglês para o francês com `gpt-4.1-mini`, usando `ChatOpenAI` do LangChain. A cadeia formata o prompt, faz uma chamada assíncrona e extrai o texto da resposta.
+Traduz do inglês para o francês com `gpt-4.1-mini` via LangChain.
 
 ## Como executar
 
-Use Python 3.12. Clone este repositório e entre na pasta.
+Use Python 3.12. Se já descompactou o projeto, entre na pasta e pule a etapa de clonagem.
 
 ```bash
 git clone https://github.com/yurimorillaprevidas/tp-langchain-q2-openai-fr.git
@@ -20,7 +20,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-No macOS ou Linux, use o terminal.
+No macOS ou Linux, rode os comandos abaixo.
 
 ```bash
 python3.12 -m venv .venv
@@ -43,7 +43,7 @@ Use este comando no PowerShell.
 $env:OPENAI_API_KEY = "SUA_CHAVE"
 ```
 
-No macOS ou Linux, use o terminal.
+No macOS ou Linux, rode os comandos abaixo.
 
 ```bash
 export OPENAI_API_KEY="SUA_CHAVE"
@@ -77,8 +77,8 @@ Exemplo de resposta HTTP 200.
 }
 ```
 
-O endpoint aceita de 1 a 2.000 caracteres, respeita a janela de contexto do GPT-2 e acrescenta até 48 tokens. A resposta inclui a frase de entrada e sua continuação. Como a geração usa amostragem, o resultado pode variar.,Envie de 1 a 20.000 caracteres em `text`. A aplicação divide parágrafos longos em trechos de até 250 tokens de entrada e reúne as traduções na ordem original. Para testar dois parágrafos, use `{"text":"The cat is sleeping.\n\nThe moon is shining."}`. O JSON de saída mantém a separação entre parágrafos.,As perguntas previstas são `Olá!`, `Qual é o seu nome?` e `Qual é a capital do Brasil?`. Para outras entradas, o chatbot retorna `Ainda não tenho uma resposta para essa pergunta.`. A comparação ignora maiúsculas e pontuação final.,O endpoint aceita de 1 a 4.000 caracteres. Reutiliza a cadeia, configura um timeout de 15 segundos no cliente e faz uma chamada por requisição, sem tentativas automáticas. O HTTP 503 indica ausência da chave, o 429 indica limite de uso, o 504 indica timeout e o 502 indica falha do provedor ou tradução vazia. Uma chamada real consome a cota da sua conta da API.,Envie de 1 a 20.000 caracteres em `text`. A aplicação divide parágrafos longos em trechos de até 250 tokens, envia cada conjunto ao `HuggingFacePipeline` com `.batch()` e reúne as traduções na ordem original.
+O campo `text` aceita até 4.000 caracteres. O cliente faz uma chamada por requisição e usa um timeout de 15 segundos. A API retorna HTTP 503 se faltar a chave, 429 para limite de uso, 504 para timeout e 502 se o provedor falhar ou devolver uma tradução vazia.
 
-Uma entrada ausente, vazia ou acima do limite retorna HTTP 422.
+O FastAPI retorna HTTP 422 se faltar o campo, se ele estiver vazio ou se exceder o limite.
 
 [Documentação do modelo ou componente](<https://developers.openai.com/api/docs/models/gpt-4.1-mini>)
